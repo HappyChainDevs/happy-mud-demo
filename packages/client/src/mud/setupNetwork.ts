@@ -5,9 +5,7 @@
  */
 import {
   createPublicClient,
-  fallback,
-  webSocket,
-  http,
+  custom,
   createWalletClient,
   Hex,
   parseEther,
@@ -20,11 +18,12 @@ import { encodeEntity, syncToRecs } from "@latticexyz/store-sync/recs";
 import { getNetworkConfig } from "./getNetworkConfig";
 import { world } from "./world";
 import IWorldAbi from "contracts/out/IWorld.sol/IWorld.abi.json";
-import { createBurnerAccount, transportObserver, ContractWrite } from "@latticexyz/common";
+import { transportObserver, ContractWrite } from "@latticexyz/common";
 import { transactionQueue, writeObserver } from "@latticexyz/common/actions";
 
 import { Subject, share } from "rxjs";
 
+import type { HappyProvider, HappyUser } from "@happychain/react";
 /*
  * Import our MUD config, which includes strong types for
  * our tables and other config options. We use this to generate
@@ -34,10 +33,12 @@ import { Subject, share } from "rxjs";
  * for the source of this information.
  */
 import mudConfig from "contracts/mud.config";
-
 export type SetupNetworkResult = Awaited<ReturnType<typeof setupNetwork>>;
 
-export async function setupNetwork() {
+export async function setupNetwork(
+  user: HappyUser,
+  provider: HappyProvider
+) {
   const networkConfig = await getNetworkConfig();
 
   /*
@@ -46,12 +47,11 @@ export async function setupNetwork() {
    */
   const clientOptions = {
     chain: networkConfig.chain,
-    transport: transportObserver(fallback([webSocket(), http()])),
+    transport: transportObserver(custom(provider)),
     pollingInterval: 1000,
   } as const satisfies ClientConfig;
 
   const publicClient = createPublicClient(clientOptions);
-
   /*
    * Create an observable for contract writes that we can
    * pass into MUD dev tools for transaction observability.
@@ -62,21 +62,19 @@ export async function setupNetwork() {
    * Create a temporary wallet and a viem client for it
    * (see https://viem.sh/docs/clients/wallet.html).
    */
-  const burnerAccount = createBurnerAccount(networkConfig.privateKey as Hex);
-  const burnerWalletClient = createWalletClient({
+  const walletClient = createWalletClient({
     ...clientOptions,
-    account: burnerAccount,
+    account: user.address,
   })
     .extend(transactionQueue())
     .extend(writeObserver({ onWrite: (write) => write$.next(write) }));
-
   /*
    * Create an object for communicating with the deployed World.
    */
   const worldContract = getContract({
     address: networkConfig.worldAddress as Hex,
     abi: IWorldAbi,
-    client: { public: publicClient, wallet: burnerWalletClient },
+    client: { public: publicClient, wallet: walletClient },
   });
 
   /*
@@ -99,7 +97,8 @@ export async function setupNetwork() {
    * run out.
    */
   if (networkConfig.faucetServiceUrl) {
-    const address = burnerAccount.address;
+    const address = user.address;
+
     console.info("[Dev Faucet]: Player address -> ", address);
 
     const faucet = createFaucetService(networkConfig.faucetServiceUrl);
@@ -124,9 +123,9 @@ export async function setupNetwork() {
   return {
     world,
     components,
-    playerEntity: encodeEntity({ address: "address" }, { address: burnerWalletClient.account.address }),
+    playerEntity: encodeEntity({ address: "address" }, { address: walletClient.account.address }),
     publicClient,
-    walletClient: burnerWalletClient,
+    walletClient: walletClient,
     latestBlock$,
     storedBlockLogs$,
     waitForTransaction,
