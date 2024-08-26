@@ -6,10 +6,6 @@ import { MUDProvider } from "./MUDContext";
 import { initializeDevTools } from "./devtools";
 import { type SetupResult, setup } from "./mud/setup";
 
-function ConnectScreen() {
-  return <div>connect wallet via HappyChain</div>;
-}
-
 function GameScreen({ setupVal }: { setupVal: SetupResult }) {
   return (
     <>
@@ -33,10 +29,7 @@ export function App() {
 
   useEffect(() => {
     void (async () => {
-      // dont run setup if user hasn't logged in yet
-      if (!user) return;
-      
-      const setupResult = await setup(user, provider);
+      const setupResult = await setup(provider, user);
       setSetupVal(setupResult);
       if (import.meta.env.DEV) {
         await initializeDevTools(setupResult);
@@ -44,5 +37,5 @@ export function App() {
     })();
   }, [provider, user]);
 
-  return user && setupVal ? <GameScreen setupVal={setupVal} /> : <ConnectScreen />;
+  return setupVal && <GameScreen setupVal={setupVal} />;
 }

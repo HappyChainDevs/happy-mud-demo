@@ -5,11 +5,16 @@ import { ClientComponents } from "./createClientComponents";
 import { SetupNetworkResult } from "./setupNetwork";
 import { Direction } from "../direction";
 import { MonsterCatchResult } from "../monsterCatchResult";
+import { SetupRawNetworkResult } from "./setupRawNetwork";
 
 export type SystemCalls = ReturnType<typeof createSystemCalls>;
 
 export function createSystemCalls(
-  { playerEntity, worldContract, waitForTransaction }: SetupNetworkResult,
+  {
+    playerEntity,
+    worldContract,
+    waitForTransaction,
+  }: SetupNetworkResult | SetupRawNetworkResult,
   {
     Encounter,
     MapConfig,
