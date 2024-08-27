@@ -14,9 +14,11 @@ export const GameBoard = () => {
 
   const {
     components: { Encounter, MapConfig, Monster, Player, Position },
-    network: { playerEntity },
+    network: { getPlayerEntity },
     systemCalls: { spawn },
   } = useMUD();
+
+  const playerEntity = getPlayerEntity()
 
   const canSpawn = useComponentValue(Player, playerEntity)?.value !== true;
 

@@ -11,8 +11,8 @@ import {
   parseEther,
   ClientConfig,
   getContract,
+  zeroAddress,
 } from "viem";
-import { createFaucetService } from "@latticexyz/services/faucet";
 import { encodeEntity, syncToRecs } from "@latticexyz/store-sync/recs";
 
 import { getNetworkConfig } from "./getNetworkConfig";
@@ -23,7 +23,8 @@ import { transactionQueue, writeObserver } from "@latticexyz/common/actions";
 
 import { Subject, share } from "rxjs";
 
-import type { HappyProvider, HappyUser } from "@happychain/react";
+import type {  HappyUser, } from "@happychain/react";
+import {  happyProvider, onUserUpdate } from "@happychain/react";
 /*
  * Import our MUD config, which includes strong types for
  * our tables and other config options. We use this to generate
@@ -35,10 +36,7 @@ import type { HappyProvider, HappyUser } from "@happychain/react";
 import mudConfig from "contracts/mud.config";
 export type SetupNetworkResult = Awaited<ReturnType<typeof setupNetwork>>;
 
-export async function setupNetwork(
-  user: HappyUser,
-  provider: HappyProvider
-) {
+export async function setupNetwork() {
   const networkConfig = await getNetworkConfig();
 
   /*
@@ -47,35 +45,17 @@ export async function setupNetwork(
    */
   const clientOptions = {
     chain: networkConfig.chain,
-    transport: transportObserver(custom(provider)),
+    transport: transportObserver(custom(happyProvider)),
     pollingInterval: 1000,
   } as const satisfies ClientConfig;
 
   const publicClient = createPublicClient(clientOptions);
+
   /*
    * Create an observable for contract writes that we can
    * pass into MUD dev tools for transaction observability.
    */
   const write$ = new Subject<ContractWrite>();
-
-  /*
-   * Create a temporary wallet and a viem client for it
-   * (see https://viem.sh/docs/clients/wallet.html).
-   */
-  const walletClient = createWalletClient({
-    ...clientOptions,
-    account: user.address,
-  })
-    .extend(transactionQueue())
-    .extend(writeObserver({ onWrite: (write) => write$.next(write) }));
-  /*
-   * Create an object for communicating with the deployed World.
-   */
-  const worldContract = getContract({
-    address: networkConfig.worldAddress as Hex,
-    abi: IWorldAbi,
-    client: { public: publicClient, wallet: walletClient },
-  });
 
   /*
    * Sync on-chain state into RECS and keeps our client in sync.
@@ -91,45 +71,89 @@ export async function setupNetwork(
     startBlock: BigInt(networkConfig.initialBlockNumber),
   });
 
+  let _walletClient: ReturnType<typeof createUserWalletClient> | undefined;
+  let _user: HappyUser | undefined;
+
+  function createUserWalletClient(address: `0x${string}`) {
+    return createWalletClient({ ...clientOptions, account: address })
+    .extend(transactionQueue())
+    .extend(writeObserver({ onWrite: (write) => write$.next(write) }))
+  }
+
+
+  
+  const connectUser = (user: HappyUser) => {
+    _user = user
+    _walletClient = createUserWalletClient(user.address)
+    
+    /*
+    * If there is a faucet, request (test) ETH if you have
+    * less than 1 ETH. Repeat every 20 seconds to ensure you don't
+    * run out.
+    */
+   const { faucetServiceUrl } = networkConfig
+    if (faucetServiceUrl) {
+      const address = user.address;
+
+      console.info("[Dev Faucet]: Player address -> ", address);
+
+      const requestDrip = async () => {
+        const balance = await publicClient.getBalance({ address });
+        console.info(`[Dev Faucet]: Player balance -> ${balance}`);
+        const lowBalance = balance < parseEther("1");
+        if (lowBalance) {
+          console.info("[Dev Faucet]: Balance is low, dripping funds to player");
+          // Double drip
+          await fetch(faucetServiceUrl, {
+            method: 'POST',
+            body: JSON.stringify({ address })
+          })
+          await fetch(faucetServiceUrl, {
+            method: 'POST',
+            body: JSON.stringify({ address })
+          })
+        }
+      };
+
+      requestDrip();
+      // Request a drip every 20 seconds
+      setInterval(requestDrip, 20000);
+    }
+  }
+
+  let _playerEntity = encodeEntity({ address: "address" }, { address: zeroAddress })
+
+  onUserUpdate((user?: HappyUser) => {
+    if (user) {
+      _playerEntity = encodeEntity({ address: "address" }, { address: user.address })
+      connectUser(user)
+    } else {
+      _walletClient = undefined
+    }
+  })
+
+  const worldContractConfig = { address: networkConfig.worldAddress as Hex, abi: IWorldAbi }
   /*
-   * If there is a faucet, request (test) ETH if you have
-   * less than 1 ETH. Repeat every 20 seconds to ensure you don't
-   * run out.
+   * Create an object for communicating with the deployed World.
    */
-  if (networkConfig.faucetServiceUrl) {
-    const address = user.address;
-
-    console.info("[Dev Faucet]: Player address -> ", address);
-
-    const faucet = createFaucetService(networkConfig.faucetServiceUrl);
-
-    const requestDrip = async () => {
-      const balance = await publicClient.getBalance({ address });
-      console.info(`[Dev Faucet]: Player balance -> ${balance}`);
-      const lowBalance = balance < parseEther("1");
-      if (lowBalance) {
-        console.info("[Dev Faucet]: Balance is low, dripping funds to player");
-        // Double drip
-        await faucet.dripDev({ address });
-        await faucet.dripDev({ address });
-      }
-    };
-
-    requestDrip();
-    // Request a drip every 20 seconds
-    setInterval(requestDrip, 20000);
+  const getWorldContract = () => {
+    return _walletClient ? getContract({
+      ...worldContractConfig,
+      client: { public: publicClient, wallet: _walletClient },
+    }) : null
   }
 
   return {
     world,
     components,
-    playerEntity: encodeEntity({ address: "address" }, { address: walletClient.account.address }),
+    getPlayerEntity: () => _playerEntity,
     publicClient,
-    walletClient: walletClient,
+    getWalletClient: () => _walletClient,
     latestBlock$,
     storedBlockLogs$,
     waitForTransaction,
-    worldContract,
+    getWorldContract,
+    worldContractConfig,
     write$: write$.asObservable().pipe(share()),
-  };
+  } as const;
 }

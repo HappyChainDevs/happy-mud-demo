@@ -31,10 +31,12 @@ export const GameMap = ({
   encounter,
 }: Props) => {
   const {
-    network: { playerEntity },
+    network: { getPlayerEntity },
   } = useMUD();
 
   const { user } = useHappyChain();
+
+  const playerEntity = getPlayerEntity()
 
   const rows = new Array(width).fill(0).map((_, i) => i);
   const columns = new Array(height).fill(0).map((_, i) => i);

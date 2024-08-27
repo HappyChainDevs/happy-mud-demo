@@ -1,5 +1,5 @@
-import { useHappyChain } from "@happychain/react";
-import { StrictMode, useEffect, useState } from "react";
+import { useHappyChain, happyProvider } from "@happychain/react";
+import { useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
 import GameWrapper from "./GameWrapper";
 import { MUDProvider } from "./MUDContext";
@@ -10,32 +10,38 @@ function GameScreen({ setupVal }: { setupVal: SetupResult }) {
   return (
     <>
       <MUDProvider value={setupVal}>
-        <StrictMode>
-          <GameWrapper />
-          <ToastContainer
-            position="bottom-right"
-            draggable={false}
-            theme="dark"
-          />
-        </StrictMode>
+        <GameWrapper />
+        <ToastContainer
+          position="bottom-right"
+          draggable={false}
+          theme="dark"
+        />
       </MUDProvider>
     </>
   );
 }
 
 export function App() {
-  const { user, provider } = useHappyChain();
+  const { user } = useHappyChain();
   const [setupVal, setSetupVal] = useState<SetupResult | null>(null);
 
   useEffect(() => {
     void (async () => {
-      const setupResult = await setup(provider, user);
+      const setupResult = await setup();
       setSetupVal(setupResult);
-      if (import.meta.env.DEV) {
-        await initializeDevTools(setupResult);
-      }
     })();
-  }, [provider, user]);
+  }, []);
+
+  useEffect(() => {
+    const init = async () => {
+      if (import.meta.env.DEV && setupVal && user) {
+        // dev tools seems to require walletClient so we can't instantiate
+        // until user has signed in
+        await initializeDevTools(setupVal);
+      }
+    };
+    init();
+  }, [user, setupVal]);
 
   return setupVal && <GameScreen setupVal={setupVal} />;
 }

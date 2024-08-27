@@ -5,16 +5,15 @@ import { ClientComponents } from "./createClientComponents";
 import { SetupNetworkResult } from "./setupNetwork";
 import { Direction } from "../direction";
 import { MonsterCatchResult } from "../monsterCatchResult";
-import { SetupRawNetworkResult } from "./setupRawNetwork";
 
 export type SystemCalls = ReturnType<typeof createSystemCalls>;
 
 export function createSystemCalls(
   {
-    playerEntity,
-    worldContract,
+    getPlayerEntity,
+    getWorldContract,
     waitForTransaction,
-  }: SetupNetworkResult | SetupRawNetworkResult,
+  }: SetupNetworkResult,
   {
     Encounter,
     MapConfig,
@@ -40,8 +39,14 @@ export function createSystemCalls(
   };
 
   const move = async (direction: Direction) => {
+    const playerEntity = getPlayerEntity()
     if (!playerEntity) {
       throw new Error("no player");
+    }
+
+    const worldContract = getWorldContract()
+    if (!worldContract) {
+      throw new Error("no world contract")
     }
 
     const position = getComponentValue(Position, playerEntity);
@@ -88,8 +93,13 @@ export function createSystemCalls(
   };
 
   const spawn = async (inputX: number, inputY: number) => {
+    const playerEntity = getPlayerEntity()
     if (!playerEntity) {
       throw new Error("no player");
+    }
+    const worldContract = getWorldContract()
+    if (!worldContract) {
+      throw new Error("no world contract")
     }
 
     const canSpawn = getComponentValue(Player, playerEntity)?.value !== true;
@@ -124,9 +134,14 @@ export function createSystemCalls(
   };
 
   const throwBall = async () => {
+    const playerEntity = getPlayerEntity()
     const player = playerEntity;
     if (!player) {
       throw new Error("no player");
+    }
+    const worldContract = getWorldContract()
+    if (!worldContract) {
+      throw new Error("no world contract")
     }
 
     const encounter = getComponentValue(Encounter, player);
@@ -146,6 +161,10 @@ export function createSystemCalls(
   };
 
   const fleeEncounter = async () => {
+    const worldContract = getWorldContract()
+    if (!worldContract) {
+      throw new Error("no world contract")
+    }
     const tx = await worldContract.write.flee();
     await waitForTransaction(tx);
   };
