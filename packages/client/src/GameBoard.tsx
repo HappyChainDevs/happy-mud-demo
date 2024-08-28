@@ -8,15 +8,29 @@ import { singletonEntity } from "@latticexyz/store-sync/recs";
 import { Entity, Has, getComponentValueStrict } from "@latticexyz/recs";
 import { EncounterScreen } from "./EncounterScreen";
 import { MonsterType, monsterTypes } from "./monsterTypes";
+import { useEffect, useState } from "react";
+import { useHappyChain } from "@happychain/react";
 
 export const GameBoard = () => {
+  const [playerEntity, setPlayerEntity] = useState<Entity | undefined>(
+    undefined
+  );
   useKeyboardMovement();
 
   const {
-    components: { Encounter, MapConfig, Monster, Player, Position },
-    network: { playerEntity },
-    systemCalls: { spawn },
+    gameComponents: { Encounter, MapConfig, Monster, Player, Position },
+    getApi,
   } = useMUD();
+
+  const { user } = useHappyChain();
+
+  const api = getApi();
+
+  useEffect(() => {
+    if (user && api) {
+      setPlayerEntity(api.playerEntity);
+    }
+  }, [api, user]);
 
   const canSpawn = useComponentValue(Player, playerEntity)?.value !== true;
 
@@ -31,10 +45,18 @@ export const GameBoard = () => {
   });
 
   const mapConfig = useComponentValue(MapConfig, singletonEntity);
-  if (mapConfig == null) {
-    throw new Error(
-      "map config not set or not ready, only use this hook after loading state === LIVE"
-    );
+
+  const encounter = useComponentValue(Encounter, playerEntity);
+  const monsterType = encounter
+    ? useComponentValue(Monster, encounter.monster as Entity)?.value // todo
+    : undefined;
+  const monster = monsterType
+    ? monsterTypes[monsterType as MonsterType]
+    : undefined;
+
+  // Ensure that the map config is fully loaded before rendering the GameMap
+  if (!mapConfig) {
+    return <div>Loading...</div>;
   }
 
   const { width, height, terrain: terrainData } = mapConfig;
@@ -48,28 +70,18 @@ export const GameBoard = () => {
     };
   });
 
-  const encounter = useComponentValue(Encounter, playerEntity);
-  const monsterType = useComponentValue(
-    Monster,
-    encounter ? (encounter.monster as Entity) : undefined
-  )?.value;
-  const monster =
-    monsterType != null && monsterType in MonsterType
-      ? monsterTypes[monsterType as MonsterType]
-      : null;
-
   return (
     <GameMap
       width={width}
       height={height}
       terrain={terrain}
-      onTileClick={canSpawn ? spawn : undefined}
+      onTileClick={canSpawn ? api?.spawn : undefined}
       players={players}
       encounter={
-        encounter ? (
+        encounter && monster ? (
           <EncounterScreen
-            monsterName={monster?.name ?? "MissingNo"}
-            monsterEmoji={monster?.emoji ?? "💱"}
+            monsterName={monster.name ?? "MissingNo"}
+            monsterEmoji={monster.emoji ?? "💱"}
           />
         ) : undefined
       }

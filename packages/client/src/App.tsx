@@ -1,41 +1,22 @@
-import { useHappyChain } from "@happychain/react";
-import { StrictMode, useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
-import GameWrapper from "./GameWrapper";
 import { MUDProvider } from "./MUDContext";
-import { initializeDevTools } from "./devtools";
-import { type SetupResult, setup } from "./mud/setup";
+import { Game } from "./mud/gameSetup/createGame";
+import { GameBoard } from "./GameBoard";
 
-function GameScreen({ setupVal }: { setupVal: SetupResult }) {
+export function App({ game }: { game: Game }) {
   return (
-    <>
-      <MUDProvider value={setupVal}>
-        <StrictMode>
-          <GameWrapper />
-          <ToastContainer
-            position="bottom-right"
-            draggable={false}
-            theme="dark"
-          />
-        </StrictMode>
+    <div>
+      <MUDProvider game={game}>
+        <div className="w-screen h-screen flex items-center justify-center">
+          <GameBoard />
+        </div>
+
+        <ToastContainer
+          position="bottom-right"
+          draggable={false}
+          theme="dark"
+        />
       </MUDProvider>
-    </>
+    </div>
   );
-}
-
-export function App() {
-  const { user, provider } = useHappyChain();
-  const [setupVal, setSetupVal] = useState<SetupResult | null>(null);
-
-  useEffect(() => {
-    void (async () => {
-      const setupResult = await setup(provider, user);
-      setSetupVal(setupResult);
-      if (import.meta.env.DEV) {
-        await initializeDevTools(setupResult);
-      }
-    })();
-  }, [provider, user]);
-
-  return setupVal && <GameScreen setupVal={setupVal} />;
 }

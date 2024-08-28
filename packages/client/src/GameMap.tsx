@@ -30,9 +30,11 @@ export const GameMap = ({
   players,
   encounter,
 }: Props) => {
-  const {
-    network: { playerEntity },
-  } = useMUD();
+  const { getApi } = useMUD();
+
+  const api = getApi();
+  console.log("[map] api", { api });
+  const playerEntity = api?.playerEntity;
 
   const { user } = useHappyChain();
 
@@ -40,6 +42,7 @@ export const GameMap = ({
   const columns = new Array(height).fill(0).map((_, i) => i);
 
   const [showEncounter, setShowEncounter] = useState(false);
+
   // Reset show encounter when we leave encounter
   useEffect(() => {
     if (!encounter) {
