@@ -4,7 +4,7 @@ import IWorldAbi from "contracts/out/IWorld.sol/IWorld.abi.json";
 import { createContext, ReactNode, useContext } from "react";
 import {
   Account,
-  Address, Chain,
+  Chain,
   createWalletClient,
   custom,
   getContract,
