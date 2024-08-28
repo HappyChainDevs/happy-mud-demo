@@ -1,5 +1,12 @@
-> Create a Pokémon-inspired on-chain game with [MUD](https://mud.dev/)
+# HappyChain MUD Demo
 
-### [Read the tutorial on mud.dev &rarr;](https://mud.dev/tutorials/emojimon/)
+This repo forks the [Emojimon](https://github.com/latticexyz/emojimon) repo with the `@happychain/react` package used to handle wallet connections / social login with web3auth.
 
-Faucet Info: https://mud.dev/services/faucet
+## Basic Setup 
+
+Run `pnpm dev` in the root of the project, mprocs handles contract deployments and client runs. 
+Otherwise, run `pnpm dev` first in `packages/contracts` and then subsequently in `packages/client`.
+
+To link the `@happychain/react` SDK: 
+- Run `pnpm build` and `pnpm link --global` in the `sdk-react` folder in the local HappyChain repo.
+- Run `pnpm link --global @happychain/react` in the client folder on the MUD demo repo. 
