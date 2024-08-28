@@ -18,19 +18,21 @@ export const GameBoard = () => {
   useKeyboardMovement();
 
   const {
-    gameComponents: { Encounter, MapConfig, Monster, Player, Position },
-    getApi,
+    game,
+    createdApi,
   } = useMUD();
+
+  const {
+    gameComponents: { Encounter, MapConfig, Monster, Player, Position },
+  } = game;
 
   const { user } = useHappyChain();
 
-  const api = getApi();
-
   useEffect(() => {
-    if (user && api) {
-      setPlayerEntity(api.playerEntity);
+    if (user && createdApi) {
+      setPlayerEntity(createdApi.playerEntity);
     }
-  }, [api, user]);
+  }, [createdApi, user]);
 
   const canSpawn = useComponentValue(Player, playerEntity)?.value !== true;
 
@@ -47,9 +49,11 @@ export const GameBoard = () => {
   const mapConfig = useComponentValue(MapConfig, singletonEntity);
 
   const encounter = useComponentValue(Encounter, playerEntity);
-  const monsterType = encounter
-    ? useComponentValue(Monster, encounter.monster as Entity)?.value // todo
-    : undefined;
+  const monsterType = useComponentValue(
+    Monster,
+    encounter?.monster as Entity
+  )?.value;
+
   const monster = monsterType
     ? monsterTypes[monsterType as MonsterType]
     : undefined;
@@ -75,7 +79,7 @@ export const GameBoard = () => {
       width={width}
       height={height}
       terrain={terrain}
-      onTileClick={canSpawn ? api?.spawn : undefined}
+      onTileClick={canSpawn ? createdApi?.spawn : undefined}
       players={players}
       encounter={
         encounter && monster ? (

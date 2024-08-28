@@ -30,11 +30,9 @@ export const GameMap = ({
   players,
   encounter,
 }: Props) => {
-  const { getApi } = useMUD();
+  const { createdApi } = useMUD();
 
-  const api = getApi();
-  console.log("[map] api", { api });
-  const playerEntity = api?.playerEntity;
+  const playerEntity = createdApi?.playerEntity;
 
   const { user } = useHappyChain();
 

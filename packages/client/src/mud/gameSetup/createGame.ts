@@ -58,10 +58,6 @@ const createGame = async () => {
     return api;
   };
 
-  const getApi = () => {
-    if (api) return api;
-  };
-
   const getGameLoadPromise = async () => {
     if (!network) {
       throw new Error("[Game] Network not defined");
@@ -74,7 +70,6 @@ const createGame = async () => {
     gameWorld,
     gameComponents,
     connectPlayer,
-    getApi,
     getGameLoadPromise,
   };
 

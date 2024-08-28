@@ -10,11 +10,7 @@ type Props = {
 };
 
 export const EncounterScreen = ({ monsterName, monsterEmoji }: Props) => {
-  const {
-    getApi
-  } = useMUD();
-
-  const api = getApi()
+  const { createdApi } = useMUD();
 
   const [appear, setAppear] = useState(false);
   useEffect(() => {
@@ -39,7 +35,7 @@ export const EncounterScreen = ({ monsterName, monsterEmoji }: Props) => {
           className="bg-stone-600 hover:ring rounded-lg px-4 py-2"
           onClick={async () => {
             const toastId = toast.loading("Throwing emojiball…");
-            const result = await api?.throwBall();
+            const result = await createdApi?.throwBall();
             if (result === MonsterCatchResult.Caught) {
               toast.update(toastId, {
                 isLoading: false,
@@ -78,7 +74,7 @@ export const EncounterScreen = ({ monsterName, monsterEmoji }: Props) => {
           className="bg-stone-800 hover:ring rounded-lg px-4 py-2"
           onClick={async () => {
             const toastId = toast.loading("Running away…");
-            await api?.fleeEncounter();
+            await createdApi?.fleeEncounter();
             toast.update(toastId, {
               isLoading: false,
               type: "default",

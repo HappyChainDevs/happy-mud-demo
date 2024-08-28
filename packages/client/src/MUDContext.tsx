@@ -1,4 +1,10 @@
-import { createContext, ReactNode, useContext, useEffect } from "react";
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { HappyUser } from "../../../../happychain/packages/sdk-shared/lib";
 import { useHappyChain } from "@happychain/react";
 import { Game } from "./mud/gameSetup/createGame";
@@ -7,8 +13,14 @@ import { ClientConfig, createWalletClient, custom } from "viem";
 import { localhost } from "viem/chains";
 import { transactionQueue, writeObserver } from "@latticexyz/common/actions";
 import { Subject } from "rxjs";
+import { Api } from "./mud/gameSetup/createApi";
 
-const MUDContext = createContext<Game | undefined>(undefined);
+type MUDContextType = {
+  game: Game;
+  createdApi?: Api; // Optional because it might be undefined initially
+};
+
+const MUDContext = createContext<MUDContextType | undefined>(undefined);
 
 type Props = {
   children: ReactNode;
@@ -16,12 +28,13 @@ type Props = {
 };
 
 export const MUDProvider = ({ children, game }: Props) => {
+  const [createdApi, setCreatedApi] = useState<Api | undefined>(undefined);
   const { user, provider } = useHappyChain();
 
   const processUserUpdate = async (gameSetup: Game, user: HappyUser) => {
     // instantiate wallet client here
     const write$ = new Subject<ContractWrite>();
-    
+
     const clientOptions = {
       chain: localhost,
       transport: transportObserver(custom(provider)),
@@ -35,7 +48,8 @@ export const MUDProvider = ({ children, game }: Props) => {
       .extend(transactionQueue())
       .extend(writeObserver({ onWrite: (write) => write$.next(write) }));
 
-    game.connectPlayer(walletClient);
+    const api = await game.connectPlayer(walletClient);
+    if (api) setCreatedApi(api);
   };
 
   useEffect(() => {
@@ -45,7 +59,11 @@ export const MUDProvider = ({ children, game }: Props) => {
 
   const currentValue = useContext(MUDContext);
   if (currentValue) throw new Error("MUDProvider can only be used once");
-  return <MUDContext.Provider value={game}>{children}</MUDContext.Provider>;
+  return (
+    <MUDContext.Provider value={{ game, createdApi }}>
+      {children}
+    </MUDContext.Provider>
+  );
 };
 
 export const useMUD = () => {

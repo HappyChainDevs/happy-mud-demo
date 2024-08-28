@@ -3,28 +3,26 @@ import { useMUD } from "./MUDContext";
 import { Direction } from "./direction";
 
 export const useKeyboardMovement = () => {
-  const { getApi } = useMUD();
-
-  const api = getApi();
+  const { createdApi } = useMUD();
 
   useEffect(() => {
     const listener = async (e: KeyboardEvent) => {
-      if (!api) return;
+      if (!createdApi) return;
       if (e.key === "ArrowUp") {
-        await api.move(Direction.North);
+        await createdApi.move(Direction.North);
       }
       if (e.key === "ArrowDown") {
-        await api.move(Direction.South);
+        await createdApi.move(Direction.South);
       }
       if (e.key === "ArrowLeft") {
-        await api.move(Direction.West);
+        await createdApi.move(Direction.West);
       }
       if (e.key === "ArrowRight") {
-        await api.move(Direction.East);
+        await createdApi.move(Direction.East);
       }
     };
 
     window.addEventListener("keydown", listener);
     return () => window.removeEventListener("keydown", listener);
-  }, [api]);
+  }, [createdApi]);
 };
