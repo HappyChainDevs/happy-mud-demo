@@ -5,6 +5,7 @@ import { getComponentValue, Has, HasValue, runQuery } from "@latticexyz/recs";
 import { Direction } from "../../direction";
 import { uuid } from "@latticexyz/utils";
 import { OverridableGameComponents } from "./createGameComponents";
+import { MonsterCatchResult } from "../../monsterCatchResult";
 
 export type Api = Awaited<ReturnType<typeof createApi>>;
 
@@ -23,8 +24,6 @@ export const createApi = async (
   if (!network) {
     throw new Error("[Create API] Network is not set");
   }
-
-  console.log({ components, walletClient, network });
 
   const { waitForTransaction, getWalletClientContract } = network;
   const world = await getWalletClientContract(walletClient);
@@ -56,6 +55,12 @@ export const createApi = async (
 
   const isObstructed = (x: number, y: number) => {
     return runQuery([Has(Obstruction), HasValue(Position, { x, y })]).size > 0;
+  };
+
+  const options = {
+    chain: network.networkConfig.chain,
+    account: walletClient.account!,
+    gas: 1_000_000n,
   };
 
   const move = async (direction: Direction) => {
@@ -100,7 +105,7 @@ export const createApi = async (
     });
 
     try {
-      const tx = await world.write.move([direction]);
+      const tx = await world.write.move([direction], options);
       await waitForTransaction(tx);
     } finally {
       Position.removeOverride(positionId);
@@ -135,7 +140,7 @@ export const createApi = async (
     });
 
     try {
-      const tx = await world.write.spawn([x, y]);
+      const tx = await world.write.spawn([x, y], options);
       await waitForTransaction(tx);
     } finally {
       Position.removeOverride(positionId);
@@ -154,7 +159,7 @@ export const createApi = async (
       throw new Error("no encounter");
     }
 
-    const tx = await world.write.throwBall();
+    const tx = await world.write.throwBall(options);
     await waitForTransaction(tx);
 
     const catchAttempt = getComponentValue(MonsterCatchAttempt, player);
@@ -166,7 +171,7 @@ export const createApi = async (
   };
 
   const fleeEncounter = async () => {
-    const tx = await world.write.flee();
+    const tx = await world.write.flee(options);
     await waitForTransaction(tx);
   };
 
