@@ -11,6 +11,7 @@
     "test": "tsc --noEmit"
   },
   "dependencies": {
+    "@happychain/react": "latest",
     "@latticexyz/common": "2.0.1",
     "@latticexyz/dev-tools": "2.0.1",
     "@latticexyz/react": "2.0.1",

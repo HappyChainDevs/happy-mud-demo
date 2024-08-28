@@ -8,7 +8,6 @@ import {
   fallback,
   webSocket,
   http,
-  createWalletClient,
   Hex,
   parseEther,
   ClientConfig,
@@ -20,8 +19,7 @@ import { encodeEntity, syncToRecs } from "@latticexyz/store-sync/recs";
 import { getNetworkConfig } from "./getNetworkConfig";
 import { world } from "./world";
 import IWorldAbi from "contracts/out/IWorld.sol/IWorld.abi.json";
-import { createBurnerAccount, transportObserver, ContractWrite } from "@latticexyz/common";
-import { transactionQueue, writeObserver } from "@latticexyz/common/actions";
+import { transportObserver, ContractWrite } from "@latticexyz/common";
 
 import { Subject, share } from "rxjs";
 
@@ -59,24 +57,12 @@ export async function setupNetwork() {
   const write$ = new Subject<ContractWrite>();
 
   /*
-   * Create a temporary wallet and a viem client for it
-   * (see https://viem.sh/docs/clients/wallet.html).
-   */
-  const burnerAccount = createBurnerAccount(networkConfig.privateKey as Hex);
-  const burnerWalletClient = createWalletClient({
-    ...clientOptions,
-    account: burnerAccount,
-  })
-    .extend(transactionQueue())
-    .extend(writeObserver({ onWrite: (write) => write$.next(write) }));
-
-  /*
    * Create an object for communicating with the deployed World.
    */
   const worldContract = getContract({
     address: networkConfig.worldAddress as Hex,
     abi: IWorldAbi,
-    client: { public: publicClient, wallet: burnerWalletClient },
+    client: { public: publicClient, wallet: undefined },
   });
 
   /*
@@ -99,7 +85,7 @@ export async function setupNetwork() {
    * run out.
    */
   if (networkConfig.faucetServiceUrl) {
-    const address = burnerAccount.address;
+    const address = "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266";
     console.info("[Dev Faucet]: Player address -> ", address);
 
     const faucet = createFaucetService(networkConfig.faucetServiceUrl);
@@ -116,7 +102,7 @@ export async function setupNetwork() {
       }
     };
 
-    requestDrip();
+    void requestDrip();
     // Request a drip every 20 seconds
     setInterval(requestDrip, 20000);
   }
@@ -124,13 +110,14 @@ export async function setupNetwork() {
   return {
     world,
     components,
-    playerEntity: encodeEntity({ address: "address" }, { address: burnerWalletClient.account.address }),
+    playerEntity: encodeEntity({ address: "address" }, { address: "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266" }),
     publicClient,
-    walletClient: burnerWalletClient,
+    walletClient: undefined,
     latestBlock$,
     storedBlockLogs$,
     waitForTransaction,
     worldContract,
+    writeSubject: write$,
     write$: write$.asObservable().pipe(share()),
   };
 }

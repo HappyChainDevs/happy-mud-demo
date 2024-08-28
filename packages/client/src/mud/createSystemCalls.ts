@@ -1,6 +1,7 @@
 import { Has, HasValue, getComponentValue, runQuery } from "@latticexyz/recs";
 import { singletonEntity } from "@latticexyz/store-sync/recs";
 import { uuid } from "@latticexyz/utils";
+import { happyChainState } from "../MUDContext"
 import { ClientComponents } from "./createClientComponents";
 import { SetupNetworkResult } from "./setupNetwork";
 import { Direction } from "../direction";
@@ -9,7 +10,7 @@ import { MonsterCatchResult } from "../monsterCatchResult";
 export type SystemCalls = ReturnType<typeof createSystemCalls>;
 
 export function createSystemCalls(
-  { playerEntity, worldContract, waitForTransaction }: SetupNetworkResult,
+  { playerEntity, waitForTransaction }: SetupNetworkResult,
   {
     Encounter,
     MapConfig,
@@ -19,6 +20,14 @@ export function createSystemCalls(
     Position,
   }: ClientComponents
 ) {
+
+  const worldContract = () => {
+    if (!happyChainState.worldContractWrite) {
+      throw new Error("user not logged in ");
+    }
+    return happyChainState.worldContractWrite;
+  }
+
   const wrapPosition = (x: number, y: number) => {
     const mapConfig = getComponentValue(MapConfig, singletonEntity);
     if (!mapConfig) {
@@ -75,7 +84,7 @@ export function createSystemCalls(
     });
 
     try {
-      const tx = await worldContract.write.move([direction]);
+      const tx = await worldContract().write.move([direction]);
       await waitForTransaction(tx);
     } finally {
       Position.removeOverride(positionId);
@@ -110,7 +119,7 @@ export function createSystemCalls(
     });
 
     try {
-      const tx = await worldContract.write.spawn([x, y]);
+      const tx = await worldContract().write.spawn([x, y]);
       await waitForTransaction(tx);
     } finally {
       Position.removeOverride(positionId);
@@ -129,7 +138,7 @@ export function createSystemCalls(
       throw new Error("no encounter");
     }
 
-    const tx = await worldContract.write.throwBall();
+    const tx = await worldContract().write.throwBall();
     await waitForTransaction(tx);
 
     const catchAttempt = getComponentValue(MonsterCatchAttempt, player);
@@ -141,7 +150,7 @@ export function createSystemCalls(
   };
 
   const fleeEncounter = async () => {
-    const tx = await worldContract.write.flee();
+    const tx = await worldContract().write.flee();
     await waitForTransaction(tx);
   };
 
