@@ -10,10 +10,10 @@ import { useHappyChain } from "@happychain/react";
 import { Game } from "./mud/gameSetup/createGame";
 import { ContractWrite, transportObserver } from "@latticexyz/common";
 import { ClientConfig, createWalletClient, custom } from "viem";
-import { localhost } from "viem/chains";
 import { transactionQueue, writeObserver } from "@latticexyz/common/actions";
 import { Subject } from "rxjs";
 import { Api } from "./mud/gameSetup/createApi";
+import { getNetworkConfig } from "./mud/getNetworkConfig";
 
 type MUDContextType = {
   game: Game;
@@ -34,9 +34,10 @@ export const MUDProvider = ({ children, game }: Props) => {
   const processUserUpdate = async (gameSetup: Game, user: HappyUser) => {
     // instantiate wallet client here
     const write$ = new Subject<ContractWrite>();
+    const networkConfig = await getNetworkConfig()
 
     const clientOptions = {
-      chain: localhost,
+      chain: networkConfig.chain,
       transport: transportObserver(custom(provider)),
       pollingInterval: 1000,
     } as const satisfies ClientConfig;
