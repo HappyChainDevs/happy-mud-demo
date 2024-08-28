@@ -13,7 +13,7 @@ import {
   WalletClient,
 } from "viem"
 import { GetContractReturnType } from "viem/_types/actions/getContract"
-import { localhost } from "viem/chains"
+import { getNetworkConfig } from "./mud/getNetworkConfig"
 import { SetupResult } from "./mud/setup";
 import { useHappyChain } from "@happychain/react";
 
@@ -42,9 +42,10 @@ export const MUDProvider = ({ children, value }: Props) => {
 
   const { user, provider } = useHappyChain();
   if (user) {
+    const networkConfig = getNetworkConfig();
     if (!happyChainState.walletClient || happyChainState.walletClient?.account?.address !== user.address) {
       happyChainState.walletClient = createWalletClient({
-        chain: localhost,
+        chain: networkConfig.chain,
         transport: transportObserver(custom(provider)),
         pollingInterval: 1000,
         account: user.address,
