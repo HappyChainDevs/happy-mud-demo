@@ -14,7 +14,7 @@ import { deferred } from "@latticexyz/utils";
  * 
  * @returns {Promise<void>} - A promise that resolves once the initial synchronization is complete.
  */
-const getInitialSyncCompletePromise = async (network: Network) => {
+const getInitialSyncCompletePromise = async (network: Network): Promise<void> => {
   const {
     components: { SyncProgress },
   } = network;

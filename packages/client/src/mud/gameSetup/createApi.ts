@@ -25,8 +25,8 @@ export const createApi = async (
     throw new Error("[Create API] Network is not set");
   }
 
-  const { waitForTransaction, getWalletClientContract } = network;
-  const world = await getWalletClientContract(walletClient);
+  const { waitForTransaction, getWalletClientInjectedWorldContract } = network;
+  const world = await getWalletClientInjectedWorldContract(walletClient);
 
   const playerEntity = encodeEntity(
     { address: "address" },

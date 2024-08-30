@@ -18,6 +18,12 @@ export const createNetwork = async (
     networkConfig
   );
 
+  /*
+   * Sync on-chain state into RECS and keeps our client in sync.
+   * Uses the MUD indexer if available, otherwise falls back
+   * to the viem publicClient to make RPC calls to fetch MUD
+   * events from the chain.
+   */
   const result = await syncToRecs({
     world,
     config: mudConfig,
@@ -27,7 +33,9 @@ export const createNetwork = async (
   });
 
   // getter function for World contract instantiated with wallet client
-  const getWalletClientContract = async (walletClient: WalletClient) => {
+  const getWalletClientInjectedWorldContract = async (
+    walletClient: WalletClient
+  ) => {
     return getContract({
       abi: IWorldAbi,
       address: networkConfig.worldAddress as `0x${string}`,
@@ -49,7 +57,7 @@ export const createNetwork = async (
       client: publicClient,
     }),
     publicClient,
-    getWalletClientContract,
+    getWalletClientInjectedWorldContract,
   };
 };
 

@@ -12,6 +12,10 @@ type Props = {
 export const EncounterScreen = ({ monsterName, monsterEmoji }: Props) => {
   const { createdApi } = useMUD();
 
+  if (!createdApi) {
+    console.error("[Encounter Screen] api not instantiated");
+  }
+
   const [appear, setAppear] = useState(false);
   useEffect(() => {
     // sometimes the fade-in transition doesn't play, so a timeout is a hacky fix
@@ -35,7 +39,7 @@ export const EncounterScreen = ({ monsterName, monsterEmoji }: Props) => {
           className="bg-stone-600 hover:ring rounded-lg px-4 py-2"
           onClick={async () => {
             const toastId = toast.loading("Throwing emojiball…");
-            const result = await createdApi?.throwBall();
+            const result = await createdApi!.throwBall();
             if (result === MonsterCatchResult.Caught) {
               toast.update(toastId, {
                 isLoading: false,
@@ -74,7 +78,7 @@ export const EncounterScreen = ({ monsterName, monsterEmoji }: Props) => {
           className="bg-stone-800 hover:ring rounded-lg px-4 py-2"
           onClick={async () => {
             const toastId = toast.loading("Running away…");
-            await createdApi?.fleeEncounter();
+            await createdApi!.fleeEncounter();
             toast.update(toastId, {
               isLoading: false,
               type: "default",
