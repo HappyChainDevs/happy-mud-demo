@@ -1,67 +1,25 @@
-import { transportObserver } from "@latticexyz/common"
-import { transactionQueue, writeObserver } from "@latticexyz/common/actions";
-import IWorldAbi from "contracts/out/IWorld.sol/IWorld.abi.json";
-import { createContext, ReactNode, useContext } from "react";
-import {
-  Account,
-  Chain,
-  createWalletClient,
-  custom,
-  getContract,
-  Hex,
-  Transport,
-  WalletClient,
-} from "viem"
-import { GetContractReturnType } from "viem/_types/actions/getContract"
-import { getNetworkConfig } from "./mud/getNetworkConfig"
-import { SetupResult } from "./mud/setup";
-import { useHappyChain } from "@happychain/react";
+import { createContext, ReactNode, useContext, useRef } from "react"
+import { HappyEmojimonValue, useHappyChainValue } from "./happyChain";
 
-const MUDContext = createContext<SetupResult | null>(null);
+const MUDContext = createContext<HappyEmojimonValue | null>(null);
 
 type Props = {
   children: ReactNode;
-  value: SetupResult;
+  value: HappyEmojimonValue;
 };
 
-export type WalletClientWithAccount = WalletClient<Transport, Chain, Account>;
-
-export type HappyChainState = {
-  walletClient: WalletClientWithAccount | undefined;
-  worldContractWrite: GetContractReturnType<typeof IWorldAbi, WalletClientWithAccount> | undefined;
-}
-
-export const happyChainState: HappyChainState = {
-  walletClient: undefined,
-  worldContractWrite: undefined,
-}
-
 export const MUDProvider = ({ children, value }: Props) => {
-  const currentValue = useContext(MUDContext);
-  if (currentValue) throw new Error("MUDProvider can only be used once");
+  const parentValue = useContext(MUDContext);
+  if (parentValue) throw new Error("MUDProvider can only be used once");
 
-  const { user, provider } = useHappyChain();
-  if (user) {
-    const networkConfig = getNetworkConfig();
-    if (!happyChainState.walletClient || happyChainState.walletClient?.account?.address !== user.address) {
-      happyChainState.walletClient = createWalletClient({
-        chain: networkConfig.chain,
-        transport: transportObserver(custom(provider)),
-        pollingInterval: 1000,
-        account: user.address,
-      })
-        .extend(transactionQueue())
-        .extend(writeObserver({onWrite: (write) => value.network.writeSubject.next(write)}));
+  // Save previous value to avoid re-computing when not necessary.
+  const currentValue = useRef(value);
+  currentValue.current = useHappyChainValue(currentValue.current);
 
-      happyChainState.worldContractWrite = getContract({
-        address: value.network.worldContract.address as Hex,
-        abi: IWorldAbi,
-        client: { public: value.network.publicClient, wallet: happyChainState.walletClient },
-      });
-    }
-  }
+  console.log("user", currentValue.current.network.walletClient?.account?.address);
+  console.log("MUDProvider", currentValue.current);
 
-  return <MUDContext.Provider value={value}>{children}</MUDContext.Provider>;
+  return <MUDContext.Provider value={currentValue.current}>{children}</MUDContext.Provider>;
 };
 
 export const useMUD = () => {

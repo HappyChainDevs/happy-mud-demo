@@ -16,7 +16,7 @@ importers:
         version: 4.1.7
       '@typescript-eslint/eslint-plugin':
         specifier: 7.1.1
-        version: 7.1.1(@typescript-eslint/parser@7.1.1)(eslint@8.57.0)(typescript@5.4.2)
+        version: 7.1.1(@typescript-eslint/parser@7.1.1(eslint@8.57.0)(typescript@5.4.2))(eslint@8.57.0)(typescript@5.4.2)
       '@typescript-eslint/parser':
         specifier: 7.1.1
         version: 7.1.1(eslint@8.57.0)(typescript@5.4.2)
@@ -40,7 +40,7 @@ importers:
         version: 2.0.1(typescript@5.4.2)(zod@3.22.4)
       '@latticexyz/dev-tools':
         specifier: 2.0.1
-        version: 2.0.1(@latticexyz/common@2.0.1)(@latticexyz/recs@2.0.1)(@latticexyz/store-sync@2.0.1)(@latticexyz/store@2.0.1)(@latticexyz/utils@2.0.1)(@latticexyz/world@2.0.1)(@types/react@18.2.22)(typescript@5.4.2)(zod@3.22.4)
+        version: 2.0.1(@latticexyz/common@2.0.1(typescript@5.4.2)(zod@3.22.4))(@latticexyz/recs@2.0.1(typescript@5.4.2)(zod@3.22.4))(@latticexyz/store-sync@2.0.1(@types/react@18.3.4)(react@18.3.1)(typescript@5.4.2))(@latticexyz/store@2.0.1(typescript@5.4.2))(@latticexyz/utils@2.0.1)(@latticexyz/world@2.0.1(typescript@5.4.2))(@types/react@18.3.4)(typescript@5.4.2)(zod@3.22.4)
       '@latticexyz/react':
         specifier: 2.0.1
         version: 2.0.1(typescript@5.4.2)(zod@3.22.4)
@@ -55,7 +55,7 @@ importers:
         version: 2.0.1(google-protobuf@3.21.2)
       '@latticexyz/store-sync':
         specifier: 2.0.1
-        version: 2.0.1(@types/react@18.2.22)(react@18.2.0)(typescript@5.4.2)
+        version: 2.0.1(@types/react@18.3.4)(react@18.3.1)(typescript@5.4.2)
       '@latticexyz/utils':
         specifier: 2.0.1
         version: 2.0.1
@@ -66,14 +66,14 @@ importers:
         specifier: workspace:*
         version: link:../contracts
       react:
-        specifier: ^18.2.0
-        version: 18.2.0
+        specifier: ^18.3.1
+        version: 18.3.1
       react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
+        specifier: ^18.3.1
+        version: 18.3.1(react@18.3.1)
       react-toastify:
         specifier: ^9.1.2
-        version: 9.1.3(react-dom@18.2.0)(react@18.2.0)
+        version: 9.1.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       rxjs:
         specifier: 7.5.5
         version: 7.5.5
@@ -85,14 +85,14 @@ importers:
         version: 2.7.12(typescript@5.4.2)(zod@3.22.4)
     devDependencies:
       '@types/react':
-        specifier: 18.2.22
-        version: 18.2.22
+        specifier: 18.3.4
+        version: 18.3.4
       '@types/react-dom':
-        specifier: 18.2.7
-        version: 18.2.7
+        specifier: 18.3.0
+        version: 18.3.0
       '@vitejs/plugin-react':
         specifier: ^3.1.0
-        version: 3.1.0(vite@4.5.2)
+        version: 3.1.0(vite@4.5.2(@types/node@18.19.26))
       autoprefixer:
         specifier: ^10.4.14
         version: 10.4.19(postcss@8.4.38)
@@ -110,7 +110,7 @@ importers:
         version: 3.4.1
       vite:
         specifier: ^4.2.1
-        version: 4.5.2
+        version: 4.5.2(@types/node@18.19.26)
       wait-port:
         specifier: ^1.0.4
         version: 1.1.0
@@ -855,17 +855,14 @@ packages:
   '@types/prop-types@15.7.11':
     resolution: {integrity: sha512-ga8y9v9uyeiLdpKddhxYQkxNDrfvuPrlFb0N1qnZZByvcElJaXthF1UhvCh9TLWJBEHeNtdnbysW7Y6Uq8CVng==}
 
-  '@types/react-dom@18.2.7':
-    resolution: {integrity: sha512-GRaAEriuT4zp9N4p1i8BDBYmEyfo+xQ3yHjJU4eiK5NDa1RmUZG+unZABUTK4/Ox/M+GaHwb6Ow8rUITrtjszA==}
+  '@types/react-dom@18.3.0':
+    resolution: {integrity: sha512-EhwApuTmMBmXuFOikhQLIBUn6uFg81SwLMOAUgodJF14SOBOCMdU04gDoYi0WOJJHD144TL32z4yDqCW3dnkQg==}
 
-  '@types/react@18.2.22':
-    resolution: {integrity: sha512-60fLTOLqzarLED2O3UQImc/lsNRgG0jE/a1mPW9KjMemY0LMITWEsbS4VvZ4p6rorEHd5YKxxmMKSDK505GHpA==}
+  '@types/react@18.3.4':
+    resolution: {integrity: sha512-J7W30FTdfCxDDjmfRM+/JqLHBIyl7xUIp9kwK637FGmY7+mkSFSe6L4jpZzhj5QMfLssSDP4/i75AKkrdC7/Jw==}
 
   '@types/retry@0.12.1':
     resolution: {integrity: sha512-xoDlM2S4ortawSWORYqsdU+2rxdh4LRW9ytc3zmT37RIKQh6IHyKwwtKhKis9ah8ol07DCkZxPt8BBvPjC6v4g==}
-
-  '@types/scheduler@0.16.8':
-    resolution: {integrity: sha512-WZLiwShhwLRmeV6zH+GkbOFT6Z6VklCItrDioxUnv+u4Ll+8vKeFySoFyK/0ctcRpOmwAicELfmys1sDc/Rw+A==}
 
   '@types/semver@7.5.8':
     resolution: {integrity: sha512-I8EUhyrgfLrcTkzV3TSsGyl1tSuPrEDzr0yd5m90UgNxQkyDXULk3b6MlQqTCpZpNtWe1K0hzclnZkTcLBe2UQ==}
@@ -1314,7 +1311,6 @@ packages:
 
   ds-test@https://codeload.github.com/dapphub/ds-test/tar.gz/e282159d5170298eb2455a6c05280ab5a73a4ef0:
     resolution: {tarball: https://codeload.github.com/dapphub/ds-test/tar.gz/e282159d5170298eb2455a6c05280ab5a73a4ef0}
-    name: ds-test
     version: 1.0.0
 
   eastasianwidth@0.2.0:
@@ -1498,7 +1494,6 @@ packages:
 
   forge-std@https://codeload.github.com/foundry-rs/forge-std/tar.gz/74cfb77e308dd188d2f58864aaf44963ae6b88b1:
     resolution: {tarball: https://codeload.github.com/foundry-rs/forge-std/tar.gz/74cfb77e308dd188d2f58864aaf44963ae6b88b1}
-    name: forge-std
     version: 1.6.0
 
   fraction.js@4.3.7:
@@ -2177,10 +2172,10 @@ packages:
   queue-microtask@1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
 
-  react-dom@18.2.0:
-    resolution: {integrity: sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g==}
+  react-dom@18.3.1:
+    resolution: {integrity: sha512-5m4nQKp+rZRb09LNH59GM4BxTh9251/ylbKIbpe7TpGxfJ+9kv6BLkLBXIjjspbgbnIBNqlI23tRnTWT0snUIw==}
     peerDependencies:
-      react: ^18.2.0
+      react: ^18.3.1
 
   react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
@@ -2208,8 +2203,8 @@ packages:
       react: '>=16'
       react-dom: '>=16'
 
-  react@18.2.0:
-    resolution: {integrity: sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==}
+  react@18.3.1:
+    resolution: {integrity: sha512-wS+hAgJShR0KhEvPJArfuPVN1+Hz1t0Y6n5jLrGQbkb4urgPE/0Rve+1kMB1v/oWgHgm4WIcV+i7F2pTVj+2iQ==}
     engines: {node: '>=0.10.0'}
 
   read-cache@1.0.0:
@@ -2274,8 +2269,8 @@ packages:
     resolution: {integrity: sha512-CdASjNJPvRa7roO6Ra/gLYBTzYzzPyyBXxIMdGW3USQLyjWEls2RgW5UBTXaQVp+OrpeCK3bLem8smtmheoRuw==}
     engines: {node: '>= 0.4'}
 
-  scheduler@0.23.0:
-    resolution: {integrity: sha512-CtuThmgHNg7zIZWAXi3AsyIzA3n4xx7aNyjwC2VJldO2LMVDhFK+63xGqq6CsJH4rTAt6/M+N4GhZiDYPx9eUw==}
+  scheduler@0.23.2:
+    resolution: {integrity: sha512-UOShsPwz7NrMUqhR6t0hWjFduvOzbtv7toDH1/hIrfRNIDBnnBWd0CwJTGvTpngVlmwGCdP9/Zl/tVrDqcuYzQ==}
 
   scrypt-js@3.0.1:
     resolution: {integrity: sha512-cdwTTnqPu0Hyvf5in5asVdZocVDTNRmR7XEcJuIzMjJeSHybHl7vpB66AzwTaIg6CLSbtjcxc8fqcySfnTkccA==}
@@ -3239,7 +3234,7 @@ snapshots:
 
   '@humanwhocodes/object-schema@2.0.2': {}
 
-  '@improbable-eng/grpc-web-node-http-transport@0.15.0(@improbable-eng/grpc-web@0.15.0)':
+  '@improbable-eng/grpc-web-node-http-transport@0.15.0(@improbable-eng/grpc-web@0.15.0(google-protobuf@3.21.2))':
     dependencies:
       '@improbable-eng/grpc-web': 0.15.0(google-protobuf@3.21.2)
 
@@ -3303,7 +3298,7 @@ snapshots:
       '@ethersproject/abi': 5.7.0
       '@ethersproject/providers': 5.7.2
       '@improbable-eng/grpc-web': 0.15.0(google-protobuf@3.21.2)
-      '@improbable-eng/grpc-web-node-http-transport': 0.15.0(@improbable-eng/grpc-web@0.15.0)
+      '@improbable-eng/grpc-web-node-http-transport': 0.15.0(@improbable-eng/grpc-web@0.15.0(google-protobuf@3.21.2))
       '@latticexyz/abi-ts': 2.0.1
       '@latticexyz/common': 2.0.1(typescript@5.4.2)(zod@3.22.4)
       '@latticexyz/config': 2.0.1(typescript@5.4.2)
@@ -3374,24 +3369,24 @@ snapshots:
       - typescript
       - utf-8-validate
 
-  '@latticexyz/dev-tools@2.0.1(@latticexyz/common@2.0.1)(@latticexyz/recs@2.0.1)(@latticexyz/store-sync@2.0.1)(@latticexyz/store@2.0.1)(@latticexyz/utils@2.0.1)(@latticexyz/world@2.0.1)(@types/react@18.2.22)(typescript@5.4.2)(zod@3.22.4)':
+  '@latticexyz/dev-tools@2.0.1(@latticexyz/common@2.0.1(typescript@5.4.2)(zod@3.22.4))(@latticexyz/recs@2.0.1(typescript@5.4.2)(zod@3.22.4))(@latticexyz/store-sync@2.0.1(@types/react@18.3.4)(react@18.3.1)(typescript@5.4.2))(@latticexyz/store@2.0.1(typescript@5.4.2))(@latticexyz/utils@2.0.1)(@latticexyz/world@2.0.1(typescript@5.4.2))(@types/react@18.3.4)(typescript@5.4.2)(zod@3.22.4)':
     dependencies:
       '@latticexyz/common': 2.0.1(typescript@5.4.2)(zod@3.22.4)
       '@latticexyz/react': 2.0.1(typescript@5.4.2)(zod@3.22.4)
       '@latticexyz/recs': 2.0.1(typescript@5.4.2)(zod@3.22.4)
       '@latticexyz/schema-type': 2.0.1(typescript@5.4.2)(zod@3.22.4)
       '@latticexyz/store': 2.0.1(typescript@5.4.2)
-      '@latticexyz/store-sync': 2.0.1(@types/react@18.2.22)(react@18.2.0)(typescript@5.4.2)
+      '@latticexyz/store-sync': 2.0.1(@types/react@18.3.4)(react@18.3.1)(typescript@5.4.2)
       '@latticexyz/utils': 2.0.1
       '@latticexyz/world': 2.0.1(typescript@5.4.2)
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-      react-router-dom: 6.22.3(react-dom@18.2.0)(react@18.2.0)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+      react-router-dom: 6.22.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       rxjs: 7.5.5
       tailwind-merge: 1.14.0
-      use-local-storage-state: 18.3.3(react-dom@18.2.0)(react@18.2.0)
+      use-local-storage-state: 18.3.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       viem: 2.7.12(typescript@5.4.2)(zod@3.22.4)
-      zustand: 4.5.2(@types/react@18.2.22)(react@18.2.0)
+      zustand: 4.5.2(@types/react@18.3.4)(react@18.3.1)
     transitivePeerDependencies:
       - '@types/react'
       - bufferutil
@@ -3445,7 +3440,7 @@ snapshots:
       '@latticexyz/store': 2.0.1(typescript@5.4.2)
       fast-deep-equal: 3.1.3
       mobx: 6.12.1
-      react: 18.2.0
+      react: 18.3.1
       rxjs: 7.5.5
     transitivePeerDependencies:
       - bufferutil
@@ -3485,7 +3480,7 @@ snapshots:
     transitivePeerDependencies:
       - google-protobuf
 
-  '@latticexyz/store-sync@2.0.1(@types/react@18.2.22)(react@18.2.0)(typescript@5.4.2)':
+  '@latticexyz/store-sync@2.0.1(@types/react@18.3.4)(react@18.3.1)(typescript@5.4.2)':
     dependencies:
       '@latticexyz/block-logs-stream': 2.0.1(typescript@5.4.2)(zod@3.22.4)
       '@latticexyz/common': 2.0.1(typescript@5.4.2)(zod@3.22.4)
@@ -3509,7 +3504,7 @@ snapshots:
       superjson: 1.13.3
       viem: 2.7.12(typescript@5.4.2)(zod@3.22.4)
       zod: 3.22.4
-      zustand: 4.5.2(@types/react@18.2.22)(react@18.2.0)
+      zustand: 4.5.2(@types/react@18.3.4)(react@18.3.1)
     transitivePeerDependencies:
       - '@aws-sdk/client-rds-data'
       - '@cloudflare/workers-types'
@@ -3674,23 +3669,20 @@ snapshots:
 
   '@types/prop-types@15.7.11': {}
 
-  '@types/react-dom@18.2.7':
+  '@types/react-dom@18.3.0':
     dependencies:
-      '@types/react': 18.2.22
+      '@types/react': 18.3.4
 
-  '@types/react@18.2.22':
+  '@types/react@18.3.4':
     dependencies:
       '@types/prop-types': 15.7.11
-      '@types/scheduler': 0.16.8
       csstype: 3.1.3
 
   '@types/retry@0.12.1': {}
 
-  '@types/scheduler@0.16.8': {}
-
   '@types/semver@7.5.8': {}
 
-  '@typescript-eslint/eslint-plugin@7.1.1(@typescript-eslint/parser@7.1.1)(eslint@8.57.0)(typescript@5.4.2)':
+  '@typescript-eslint/eslint-plugin@7.1.1(@typescript-eslint/parser@7.1.1(eslint@8.57.0)(typescript@5.4.2))(eslint@8.57.0)(typescript@5.4.2)':
     dependencies:
       '@eslint-community/regexpp': 4.10.0
       '@typescript-eslint/parser': 7.1.1(eslint@8.57.0)(typescript@5.4.2)
@@ -3705,6 +3697,7 @@ snapshots:
       natural-compare: 1.4.0
       semver: 7.6.0
       ts-api-utils: 1.3.0(typescript@5.4.2)
+    optionalDependencies:
       typescript: 5.4.2
     transitivePeerDependencies:
       - supports-color
@@ -3717,6 +3710,7 @@ snapshots:
       '@typescript-eslint/visitor-keys': 7.1.1
       debug: 4.3.4
       eslint: 8.57.0
+    optionalDependencies:
       typescript: 5.4.2
     transitivePeerDependencies:
       - supports-color
@@ -3733,6 +3727,7 @@ snapshots:
       debug: 4.3.4
       eslint: 8.57.0
       ts-api-utils: 1.3.0(typescript@5.4.2)
+    optionalDependencies:
       typescript: 5.4.2
     transitivePeerDependencies:
       - supports-color
@@ -3749,6 +3744,7 @@ snapshots:
       minimatch: 9.0.3
       semver: 7.6.0
       ts-api-utils: 1.3.0(typescript@5.4.2)
+    optionalDependencies:
       typescript: 5.4.2
     transitivePeerDependencies:
       - supports-color
@@ -3774,19 +3770,19 @@ snapshots:
 
   '@ungap/structured-clone@1.2.0': {}
 
-  '@vitejs/plugin-react@3.1.0(vite@4.5.2)':
+  '@vitejs/plugin-react@3.1.0(vite@4.5.2(@types/node@18.19.26))':
     dependencies:
       '@babel/core': 7.24.3
       '@babel/plugin-transform-react-jsx-self': 7.24.1(@babel/core@7.24.3)
       '@babel/plugin-transform-react-jsx-source': 7.24.1(@babel/core@7.24.3)
       magic-string: 0.27.0
       react-refresh: 0.14.0
-      vite: 4.5.2
+      vite: 4.5.2(@types/node@18.19.26)
     transitivePeerDependencies:
       - supports-color
 
   abitype@1.0.0(typescript@5.4.2)(zod@3.22.4):
-    dependencies:
+    optionalDependencies:
       typescript: 5.4.2
       zod: 3.22.4
 
@@ -4029,6 +4025,7 @@ snapshots:
       js-yaml: 4.1.0
       parse-json: 5.2.0
       path-type: 4.0.0
+    optionalDependencies:
       typescript: 5.4.2
 
   cross-spawn@7.0.3:
@@ -4096,7 +4093,7 @@ snapshots:
   dotenv@16.4.5: {}
 
   drizzle-orm@0.28.6(kysely@0.26.3)(postgres@3.4.4)(sql.js@1.10.2):
-    dependencies:
+    optionalDependencies:
       kysely: 0.26.3
       postgres: 3.4.4
       sql.js: 1.10.2
@@ -5021,8 +5018,9 @@ snapshots:
   postcss-load-config@4.0.2(postcss@8.4.38):
     dependencies:
       lilconfig: 3.1.1
-      postcss: 8.4.38
       yaml: 2.4.1
+    optionalDependencies:
+      postcss: 8.4.38
 
   postcss-nested@6.0.1(postcss@8.4.38):
     dependencies:
@@ -5087,35 +5085,35 @@ snapshots:
 
   queue-microtask@1.2.3: {}
 
-  react-dom@18.2.0(react@18.2.0):
+  react-dom@18.3.1(react@18.3.1):
     dependencies:
       loose-envify: 1.4.0
-      react: 18.2.0
-      scheduler: 0.23.0
+      react: 18.3.1
+      scheduler: 0.23.2
 
   react-is@16.13.1: {}
 
   react-refresh@0.14.0: {}
 
-  react-router-dom@6.22.3(react-dom@18.2.0)(react@18.2.0):
+  react-router-dom@6.22.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       '@remix-run/router': 1.15.3
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-      react-router: 6.22.3(react@18.2.0)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+      react-router: 6.22.3(react@18.3.1)
 
-  react-router@6.22.3(react@18.2.0):
+  react-router@6.22.3(react@18.3.1):
     dependencies:
       '@remix-run/router': 1.15.3
-      react: 18.2.0
+      react: 18.3.1
 
-  react-toastify@9.1.3(react-dom@18.2.0)(react@18.2.0):
+  react-toastify@9.1.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       clsx: 1.2.1
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
 
-  react@18.2.0:
+  react@18.3.1:
     dependencies:
       loose-envify: 1.4.0
 
@@ -5185,7 +5183,7 @@ snapshots:
       es-errors: 1.3.0
       is-regex: 1.1.4
 
-  scheduler@0.23.0:
+  scheduler@0.23.2:
     dependencies:
       loose-envify: 1.4.0
 
@@ -5486,14 +5484,14 @@ snapshots:
     dependencies:
       punycode: 2.3.1
 
-  use-local-storage-state@18.3.3(react-dom@18.2.0)(react@18.2.0):
+  use-local-storage-state@18.3.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
 
-  use-sync-external-store@1.2.0(react@18.2.0):
+  use-sync-external-store@1.2.0(react@18.3.1):
     dependencies:
-      react: 18.2.0
+      react: 18.3.1
 
   util-deprecate@1.0.2: {}
 
@@ -5510,19 +5508,21 @@ snapshots:
       '@scure/bip39': 1.2.1
       abitype: 1.0.0(typescript@5.4.2)(zod@3.22.4)
       isows: 1.0.3(ws@8.13.0)
-      typescript: 5.4.2
       ws: 8.13.0
+    optionalDependencies:
+      typescript: 5.4.2
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
       - zod
 
-  vite@4.5.2:
+  vite@4.5.2(@types/node@18.19.26):
     dependencies:
       esbuild: 0.18.20
       postcss: 8.4.38
       rollup: 3.29.4
     optionalDependencies:
+      '@types/node': 18.19.26
       fsevents: 2.3.3
 
   wait-port@1.1.0:
@@ -5601,8 +5601,9 @@ snapshots:
 
   zod@3.22.4: {}
 
-  zustand@4.5.2(@types/react@18.2.22)(react@18.2.0):
+  zustand@4.5.2(@types/react@18.3.4)(react@18.3.1):
     dependencies:
-      '@types/react': 18.2.22
-      react: 18.2.0
-      use-sync-external-store: 1.2.0(react@18.2.0)
+      use-sync-external-store: 1.2.0(react@18.3.1)
+    optionalDependencies:
+      '@types/react': 18.3.4
+      react: 18.3.1
