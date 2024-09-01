@@ -11,6 +11,7 @@
     "test": "tsc --noEmit"
   },
   "dependencies": {
+    "@happychain/react": "link:../happychin/sdk-react",
     "@latticexyz/common": "2.0.1",
     "@latticexyz/dev-tools": "2.0.1",
     "@latticexyz/react": "2.0.1",
@@ -21,16 +22,16 @@
     "@latticexyz/utils": "2.0.1",
     "@latticexyz/world": "2.0.1",
     "contracts": "workspace:*",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "react-toastify": "^9.1.2",
     "rxjs": "7.5.5",
     "tailwind-merge": "^1.11.0",
     "viem": "2.7.12"
   },
   "devDependencies": {
-    "@types/react": "18.2.22",
-    "@types/react-dom": "18.2.7",
+    "@types/react": "^18.3.4",
+    "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^3.1.0",
     "autoprefixer": "^10.4.14",
     "eslint-plugin-react": "7.31.11",
