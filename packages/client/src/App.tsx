@@ -10,12 +10,9 @@ import { useSetup } from "./mud/setup";
 import { WalletClientWithAccount } from "./mud/types";
 import { MUDProvider } from "./MUDContext";
 
-function happyConnectStub() {}
-function happyDisconnectStub() {}
-
 export const App = () => {
   const [wallet, setWallet] = useState<WalletClientWithAccount | undefined>();
-  const { user, provider } = useHappyChain();
+  const { user, provider, connect, disconnect } = useHappyChain();
   const mud = useSetup(wallet);
   useFaucet(wallet?.account.address);
   useDevTools(mud);
@@ -29,8 +26,8 @@ export const App = () => {
     ? <MUDProvider value={mud}>
         <div style={{ position: "absolute", top: "0", right: "0", padding: "20px" }}>
           {!wallet
-            ? <button onClick={happyConnectStub} style={{ cursor: "pointer" }}>Connect</button>
-            : <button onClick={happyDisconnectStub} style={{ cursor: "pointer" }}>Disconnect</button>}
+            ? <button onClick={connect} style={{ cursor: "pointer" }}>Connect</button>
+            : <button onClick={disconnect} style={{ cursor: "pointer" }}>Disconnect</button>}
         </div>
         <LoadingWrapper/>;
         <ToastContainer position="bottom-right" draggable={false} theme="dark"/>
