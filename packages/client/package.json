@@ -11,7 +11,7 @@
     "test": "tsc --noEmit"
   },
   "dependencies": {
-    "@happychain/react": "link:../happychin/sdk-react",
+    "@happychain/react": "link:../../../happychain/packages/sdk-react",
     "@latticexyz/common": "2.0.1",
     "@latticexyz/dev-tools": "2.0.1",
     "@latticexyz/react": "2.0.1",
