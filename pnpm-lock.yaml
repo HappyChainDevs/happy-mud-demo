@@ -36,8 +36,8 @@ importers:
   packages/client:
     dependencies:
       '@happychain/react':
-        specifier: link:../happychin/sdk-react
-        version: link:../happychin/sdk-react
+        specifier: link:../../../happychain/packages/sdk-react
+        version: link:../../../happychain/packages/sdk-react
       '@latticexyz/common':
         specifier: 2.0.1
         version: 2.0.1(typescript@5.4.2)(zod@3.22.4)
