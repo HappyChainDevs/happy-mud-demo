@@ -1,45 +1,45 @@
 {
-  "name": "client",
-  "version": "0.0.0",
-  "private": true,
-  "license": "MIT",
-  "type": "module",
-  "scripts": {
-    "build": "vite build",
-    "dev": "vite",
-    "preview": "vite preview",
-    "test": "tsc --noEmit"
-  },
-  "dependencies": {
-    "@happychain/react": "link:../../../happychain/packages/sdk-react",
-    "@happychain/js": "link:../../../happychain/packages/sdk-vanillajs",
-    "@latticexyz/common": "2.0.1",
-    "@latticexyz/dev-tools": "2.0.1",
-    "@latticexyz/react": "2.0.1",
-    "@latticexyz/recs": "2.0.1",
-    "@latticexyz/schema-type": "2.0.1",
-    "@latticexyz/services": "2.0.1",
-    "@latticexyz/store-sync": "2.0.1",
-    "@latticexyz/utils": "2.0.1",
-    "@latticexyz/world": "2.0.1",
-    "contracts": "workspace:*",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-toastify": "^9.1.2",
-    "rxjs": "7.5.5",
-    "tailwind-merge": "^1.11.0",
-    "viem": "2.7.12"
-  },
-  "devDependencies": {
-    "@types/react": "^18.3.4",
-    "@types/react-dom": "^18.3.0",
-    "@vitejs/plugin-react": "^3.1.0",
-    "autoprefixer": "^10.4.14",
-    "eslint-plugin-react": "7.31.11",
-    "eslint-plugin-react-hooks": "4.6.0",
-    "postcss": "^8.4.21",
-    "tailwindcss": "^3.3.3",
-    "vite": "^4.2.1",
-    "wait-port": "^1.0.4"
-  }
+    "name": "client",
+    "version": "0.0.0",
+    "private": true,
+    "license": "MIT",
+    "type": "module",
+    "scripts": {
+        "build": "vite build",
+        "dev": "vite",
+        "preview": "vite preview",
+        "test": "tsc --noEmit"
+    },
+    "dependencies": {
+        "@happychain/react": "link:../../../happychain/packages/sdk-react",
+        "@happychain/js": "link:../../../happychain/packages/sdk-vanillajs",
+        "@latticexyz/common": "2.0.1",
+        "@latticexyz/dev-tools": "2.0.1",
+        "@latticexyz/react": "2.0.1",
+        "@latticexyz/recs": "2.0.1",
+        "@latticexyz/schema-type": "2.0.1",
+        "@latticexyz/services": "2.0.1",
+        "@latticexyz/store-sync": "2.0.1",
+        "@latticexyz/utils": "2.0.1",
+        "@latticexyz/world": "2.0.1",
+        "contracts": "workspace:*",
+        "react": "^18.3.1",
+        "react-dom": "^18.3.1",
+        "react-toastify": "^9.1.2",
+        "rxjs": "7.5.5",
+        "tailwind-merge": "^1.11.0",
+        "viem": "2.7.12"
+    },
+    "devDependencies": {
+        "@types/react": "^18.3.4",
+        "@types/react-dom": "^18.3.0",
+        "@vitejs/plugin-react": "^3.1.0",
+        "autoprefixer": "^10.4.14",
+        "eslint-plugin-react": "7.31.11",
+        "eslint-plugin-react-hooks": "4.6.0",
+        "postcss": "^8.4.21",
+        "tailwindcss": "^3.3.3",
+        "vite": "^4.2.1",
+        "wait-port": "^1.0.4"
+    }
 }

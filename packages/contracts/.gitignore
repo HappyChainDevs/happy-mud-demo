@@ -7,3 +7,6 @@ broadcast/
 
 # Ignore MUD deploy artifacts
 deploys/**/*.json
+
+# Environment files
+.env
