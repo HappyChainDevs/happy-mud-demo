@@ -22,5 +22,7 @@ extra_output_files = [
 ]
 fs_permissions = [{ access = "read", path = "./"}]
 
+eth_rpc_url = "https://happy-testnet-sepolia.rpc.caldera.xyz/http"
+
 [profile.lattice-testnet]
 eth_rpc_url = "https://follower.testnet-chain.linfra.xyz"

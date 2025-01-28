@@ -1,7 +1,7 @@
-import { networkConfig } from "./networkConfig";
-import { ContractWrite, createBurnerAccount, transportObserver } from "@latticexyz/common";
-import { transactionQueue, writeObserver } from "@latticexyz/common/actions";
-import { Subject } from "rxjs";
+import {networkConfig} from "./networkConfig";
+import {ContractWrite, createBurnerAccount, transportObserver} from "@latticexyz/common";
+import {transactionQueue, writeObserver} from "@latticexyz/common/actions";
+import {Subject} from "rxjs";
 import {
   Account,
   Address,
@@ -13,10 +13,13 @@ import {
   http,
   Transport,
   webSocket,
-} from "viem";
+} from "viem"
+// import {custom} from "viem";
+// import {happyProvider} from "@happychain/js";
 
 const clientOptions = {
   chain: networkConfig.chain,
+  // transport: transportObserver(custom(happyProvider)),
   transport: transportObserver(fallback([webSocket(), http()])),
   pollingInterval: 1000,
 } as const satisfies ClientConfig;
@@ -40,7 +43,7 @@ export function createEmojimonWalletClient(account: Account | Address, transport
     account,
   })
     .extend(transactionQueue())
-    .extend(writeObserver({ onWrite: (write) => write$.next(write) }));
+    .extend(writeObserver({onWrite: (write) => write$.next(write)}));
 }
 
 export function createBurnerWalletClient() {
