@@ -6,12 +6,13 @@
   "type": "module",
   "scripts": {
     "build": "vite build",
-    "dev": "wait-port localhost:8545 && vite",
+    "dev": "vite",
     "preview": "vite preview",
     "test": "tsc --noEmit"
   },
   "dependencies": {
     "@happychain/react": "link:../../../happychain/packages/sdk-react",
+    "@happychain/js": "link:../../../happychain/packages/sdk-vanillajs",
     "@latticexyz/common": "2.0.1",
     "@latticexyz/dev-tools": "2.0.1",
     "@latticexyz/react": "2.0.1",

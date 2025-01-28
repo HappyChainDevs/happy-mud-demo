@@ -35,6 +35,9 @@ importers:
 
   packages/client:
     dependencies:
+      '@happychain/js':
+        specifier: link:../../../happychain/packages/sdk-vanillajs
+        version: link:../../../happychain/packages/sdk-vanillajs
       '@happychain/react':
         specifier: link:../../../happychain/packages/sdk-react
         version: link:../../../happychain/packages/sdk-react
