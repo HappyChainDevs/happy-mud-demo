@@ -1,10 +1,14 @@
 import { Has, HasValue, getComponentValue, runQuery } from "@latticexyz/recs";
 import { singletonEntity } from "@latticexyz/store-sync/recs";
 import { uuid } from "@latticexyz/utils";
+import type { Address } from "viem"
 import { ClientComponents } from "./createClientComponents";
 import { type Network, WorldContractWrite } from "./setupNetwork"
 import { Direction } from "../direction";
 import { MonsterCatchResult } from "../monsterCatchResult";
+
+import { requestSessionKey } from "@happychain/js";
+import { networkConfig } from "./networkConfig";
 
 export type SystemCalls = ReturnType<typeof createSystemCalls>;
 
@@ -151,10 +155,20 @@ export function createSystemCalls(
     await waitForTransaction(tx);
   };
 
+  type Call<TArgs extends unknown[], R> = (...params: TArgs) => R;
+  type Promisify<T> = Promise<Awaited<T>>;
+
+  const createCall = <TArgs extends unknown[], R>(call: Call<TArgs, R>): Call<TArgs, Promisify<R>> => {
+    return async (...params: TArgs): Promisify<R> => {
+      await requestSessionKey(networkConfig.worldAddress as Address);
+      return Promise.resolve(call(...params));
+    }
+  }
+
   return {
-    move,
-    spawn,
-    throwBall,
-    fleeEncounter,
+    move: createCall(move),
+    spawn: createCall(spawn),
+    throwBall: createCall(throwBall),
+    fleeEncounter: createCall(fleeEncounter),
   };
 }
