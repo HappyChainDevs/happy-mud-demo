@@ -1,4 +1,4 @@
-import { connect, disconnect, requestSessionKey } from "@happychain/js"
+import { requestSessionKey  } from "@happychain/js"
 import { useHappyChain } from "@happychain/react"
 import { useEffect, useState } from "react"
 import { ToastContainer } from "react-toastify"
@@ -11,6 +11,7 @@ import { useFaucet } from "./mud/faucet"
 import { networkConfig } from "./mud/networkConfig"
 import { useSetup } from "./mud/setup"
 import type { WalletClientWithAccount } from "./mud/types"
+import { ConnectButton } from "./ConnectButton"
 
 export const App = () => {
     const [wallet, setWallet] = useState<WalletClientWithAccount | undefined>()
@@ -34,15 +35,7 @@ export const App = () => {
     return mud ? (
         <MUDProvider value={mud}>
             <div style={{ position: "absolute", top: "0", right: "0", padding: "20px" }}>
-                {!wallet ? (
-                    <button type="button" onClick={connect} style={{ cursor: "pointer" }}>
-                        Connect
-                    </button>
-                ) : (
-                    <button type="button" onClick={disconnect} style={{ cursor: "pointer" }}>
-                        Disconnect
-                    </button>
-                )}
+                <ConnectButton disableStyles={true} />
             </div>
             <LoadingWrapper />
             <ToastContainer position="bottom-right" draggable={false} theme="dark" />
