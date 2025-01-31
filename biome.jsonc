@@ -1,0 +1,124 @@
+{
+    "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+    "files": {
+        "ignore": [
+            ".pnpm-store",
+            ".next",
+            "dist",
+            "build",
+            "generated.ts",
+            "node_modules",
+            "routeTree.gen.ts",
+            "*.config.ts.timestamp-*.mjs"
+        ]
+    },
+    "formatter": {
+        "enabled": true,
+        "formatWithErrors": false,
+        "indentStyle": "space",
+        "indentWidth": 4,
+        "lineEnding": "lf",
+        "lineWidth": 120,
+        "attributePosition": "auto"
+    },
+    "organizeImports": { "enabled": true },
+    "linter": {
+        "enabled": true,
+        "rules": {
+            "recommended": true,
+            "nursery": {
+                "useSortedClasses": "off"
+            },
+            "correctness": {
+                "noUnusedVariables": {
+                    "level": "warn",
+                    "fix": "unsafe"
+                },
+                "useHookAtTopLevel": "error",
+                "noUnusedImports": {
+                    "level": "warn",
+                    "fix": "unsafe"
+                }
+            },
+            "style": {
+                "noNamespace": "error",
+                "noNonNullAssertion": "off",
+                "useTemplate": "off",
+                "noUselessElse": "off"
+            },
+            "complexity": {
+                "noForEach": "off"
+            }
+        }
+    },
+    "javascript": {
+        "formatter": {
+            "jsxQuoteStyle": "double",
+            "quoteProperties": "asNeeded",
+            "trailingCommas": "all",
+            "semicolons": "asNeeded",
+            "arrowParentheses": "always",
+            "bracketSpacing": true,
+            "bracketSameLine": false,
+            "quoteStyle": "double",
+            "attributePosition": "auto"
+        }
+    },
+    "overrides": [
+        {
+            // extended tsconfigs can be JSONC however they can't use the
+            // proper .jsonc extension and therfore are invalid json
+            // this fixes that
+            "include": ["./**/*/tsconfig.*.json", "./**/*/tsconfig.json", "./**/*/api-extractor.json"],
+            "json": {
+                "parser": {
+                    "allowComments": true,
+                    "allowTrailingCommas": true
+                },
+                "formatter": {
+                    "trailingCommas": "none"
+                }
+            }
+        },
+        {
+            // import.meta interface augmentation
+            "include": ["vite-env.d.ts"],
+            "linter": {
+                "rules": {
+                    "correctness": {
+                        "noUnusedVariables": "off"
+                    }
+                }
+            }
+        },
+        {
+            "include": ["*.vue"],
+            "linter": {
+                "rules": {
+                    "style": {
+                        "useConst": "off",
+                        "useImportType": "off"
+                    },
+                    "correctness": {
+                        "noUnusedVariables": "off",
+                        "noUnusedImports": "off",
+                        "useHookAtTopLevel": "off"
+                    }
+                }
+            }
+        },
+        {
+            "include": ["**/docs/snippets/*"],
+            "linter": {
+                "rules": {
+                    "suspicious": {
+                        "noConsoleLog": "off"
+                    },
+                    "correctness": {
+                        "noUnusedVariables": "off"
+                    }
+                }
+            }
+        }
+    ]
+}
