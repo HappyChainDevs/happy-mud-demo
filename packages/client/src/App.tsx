@@ -1,8 +1,9 @@
-import { requestSessionKey  } from "@happychain/js"
+import { requestSessionKey } from "@happychain/js"
 import { useHappyChain } from "@happychain/react"
 import { useEffect, useState } from "react"
 import { ToastContainer } from "react-toastify"
 import { type Address, custom } from "viem"
+import { ConnectButton } from "./ConnectButton"
 import { LoadingWrapper } from "./LoadingWrapper"
 import { MUDProvider } from "./MUDContext"
 import { createEmojimonWalletClient } from "./mud/account"
@@ -11,7 +12,6 @@ import { useFaucet } from "./mud/faucet"
 import { networkConfig } from "./mud/networkConfig"
 import { useSetup } from "./mud/setup"
 import type { WalletClientWithAccount } from "./mud/types"
-import { ConnectButton } from "./ConnectButton"
 
 export const App = () => {
     const [wallet, setWallet] = useState<WalletClientWithAccount | undefined>()
@@ -34,8 +34,8 @@ export const App = () => {
 
     return mud ? (
         <MUDProvider value={mud}>
-            <div style={{ position: "absolute", top: "0", right: "0", padding: "20px" }}>
-                <ConnectButton disableStyles={true} />
+            <div className="absolute top-0 right-0 p-5">
+                <ConnectButton disableStyles={false} />
             </div>
             <LoadingWrapper />
             <ToastContainer position="bottom-right" draggable={false} theme="dark" />
