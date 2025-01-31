@@ -11,16 +11,16 @@ export const useKeyboardMovement = () => {
         if (!move) return
 
         const listener = (e: KeyboardEvent) => {
-            if (e.key === "ArrowUp") {
+            if (e.key === "ArrowUp" || e.key.toLowerCase() === "w") {
                 move(Direction.North)
             }
-            if (e.key === "ArrowDown") {
-                move(Direction.South)
-            }
-            if (e.key === "ArrowLeft") {
+            if (e.key === "ArrowLeft" || e.key.toLowerCase() === "a") {
                 move(Direction.West)
             }
-            if (e.key === "ArrowRight") {
+            if (e.key === "ArrowDown" || e.key.toLowerCase() === "s") {
+                move(Direction.South)
+            }
+            if (e.key === "ArrowRight" || e.key.toLowerCase() === "d") {
                 move(Direction.East)
             }
         }
