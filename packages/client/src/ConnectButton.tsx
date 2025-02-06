@@ -1,4 +1,4 @@
-import type { BadgeProps } from "@happychain/js"
+import type { BadgeProps } from "@happy.tech/core"
 
 declare global {
     // biome-ignore lint/style/noNamespace:

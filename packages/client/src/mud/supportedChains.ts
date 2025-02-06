@@ -11,7 +11,7 @@
 
  */
 
-import { happyChainSepolia } from "@happychain/js"
+import { happyChainSepolia } from "@happy.tech/core"
 import { type MUDChain, latticeTestnet, mudFoundry } from "@latticexyz/common/chains"
 
 /*

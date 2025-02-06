@@ -1,4 +1,4 @@
-import { happyProvider } from "@happychain/js"
+import { happyProvider } from "@happy.tech/core"
 import { type ContractWrite, createBurnerAccount, transportObserver } from "@latticexyz/common"
 import { transactionQueue, writeObserver } from "@latticexyz/common/actions"
 import { Subject } from "rxjs"
@@ -17,7 +17,6 @@ import { networkConfig } from "./networkConfig"
 const clientOptions = {
     chain: networkConfig.chain,
     transport: transportObserver(custom(happyProvider)),
-    // transport: transportObserver(fallback([webSocket(), http()])),
     pollingInterval: 1000,
 } as const satisfies ClientConfig
 

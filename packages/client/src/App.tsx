@@ -1,5 +1,5 @@
-import { requestSessionKey } from "@happychain/js"
-import { useHappyChain } from "@happychain/react"
+import { requestSessionKey } from "@happy.tech/core"
+import { useHappyChain } from "@happy.tech/react"
 import { useEffect, useState } from "react"
 import { ToastContainer } from "react-toastify"
 import { type Address, custom } from "viem"

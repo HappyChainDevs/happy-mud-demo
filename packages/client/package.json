@@ -11,8 +11,8 @@
         "test": "tsc --noEmit"
     },
     "dependencies": {
-        "@happychain/react": "link:../../../happychain/packages/sdk-react",
-        "@happychain/js": "link:../../../happychain/packages/sdk-vanillajs",
+        "@happy.tech/core": "^0.1.2",
+        "@happy.tech/react": "^0.1.2",
         "@latticexyz/common": "2.0.1",
         "@latticexyz/dev-tools": "2.0.1",
         "@latticexyz/react": "2.0.1",
@@ -22,24 +22,25 @@
         "@latticexyz/store-sync": "2.0.1",
         "@latticexyz/utils": "2.0.1",
         "@latticexyz/world": "2.0.1",
+        "@wagmi/core": "^2.16.3",
         "contracts": "workspace:*",
         "react": "^18.3.1",
         "react-dom": "^18.3.1",
-        "react-toastify": "^9.1.2",
+        "react-toastify": "^9.1.3",
         "rxjs": "7.5.5",
-        "tailwind-merge": "^1.11.0",
+        "tailwind-merge": "^1.14.0",
         "viem": "2.7.12"
     },
     "devDependencies": {
-        "@types/react": "^18.3.4",
-        "@types/react-dom": "^18.3.0",
+        "@types/react": "^18.3.18",
+        "@types/react-dom": "^18.3.5",
         "@vitejs/plugin-react": "^3.1.0",
-        "autoprefixer": "^10.4.14",
+        "autoprefixer": "^10.4.20",
         "eslint-plugin-react": "7.31.11",
         "eslint-plugin-react-hooks": "4.6.0",
-        "postcss": "^8.4.21",
-        "tailwindcss": "^3.3.3",
-        "vite": "^4.2.1",
-        "wait-port": "^1.0.4"
+        "postcss": "^8.5.1",
+        "tailwindcss": "^3.4.17",
+        "vite": "^4.5.9",
+        "wait-port": "^1.1.0"
     }
 }
