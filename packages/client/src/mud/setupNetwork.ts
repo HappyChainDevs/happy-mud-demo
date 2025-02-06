@@ -24,9 +24,6 @@ import { type Hex, getContract } from "viem"
  */
 import mudConfig from "contracts/mud.config"
 
-const indexerUrl = import.meta.env.VITE_MUD_INDEXER_URL
-console.log({ indexerUrl })
-
 /**
  * Network configured without a wallet.
  */
@@ -78,7 +75,7 @@ export async function setupNetwork(walletClient?: WalletClientWithAccount) {
         address: networkConfig.worldAddress as Hex,
         publicClient,
         startBlock: BigInt(networkConfig.initialBlockNumber),
-        indexerUrl: "https://79.137.99.198:49532",
+        indexerUrl: import.meta.env.VITE_MUD_INDEXER_URL,
     })
 
     return {
