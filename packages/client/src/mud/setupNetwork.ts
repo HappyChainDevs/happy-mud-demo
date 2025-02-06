@@ -75,7 +75,7 @@ export async function setupNetwork(walletClient?: WalletClientWithAccount) {
         address: networkConfig.worldAddress as Hex,
         publicClient,
         startBlock: BigInt(networkConfig.initialBlockNumber),
-        indexerUrl: import.meta.env.VITE_MUD_INDEXER_URL
+        indexerUrl: import.meta.env.VITE_MUD_INDEXER_URL,
     })
 
     return {

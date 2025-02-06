@@ -7,7 +7,7 @@ import type { MonsterCatchResult } from "../monsterCatchResult"
 import type { ClientComponents } from "./createClientComponents"
 import type { Network, WorldContractWrite } from "./setupNetwork"
 
-import { requestSessionKey } from "@happychain/js"
+import { requestSessionKey } from "@happy.tech/core"
 import { networkConfig } from "./networkConfig"
 
 export type SystemCalls = ReturnType<typeof createSystemCalls>
