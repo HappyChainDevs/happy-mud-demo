@@ -1,0 +1,23 @@
+{
+    "systems": [
+        {
+            "namespaceLabel": "",
+            "label": "EncounterSystem",
+            "namespace": "",
+            "name": "EncounterSystem",
+            "systemId": "0x73790000000000000000000000000000456e636f756e74657253797374656d00",
+            "abi": ["function flee()", "function throwBall()"],
+            "worldAbi": ["function flee()", "function throwBall()"]
+        },
+        {
+            "namespaceLabel": "",
+            "label": "MapSystem",
+            "namespace": "",
+            "name": "MapSystem",
+            "systemId": "0x737900000000000000000000000000004d617053797374656d00000000000000",
+            "abi": ["function move(uint8 direction)", "function spawn(int32 x, int32 y)"],
+            "worldAbi": ["function move(uint8 direction)", "function spawn(int32 x, int32 y)"]
+        }
+    ],
+    "createdAt": 1738924505606
+}

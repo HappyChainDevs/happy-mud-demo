@@ -12,10 +12,10 @@
  */
 
 import { happyChainSepolia } from "@happy.tech/core"
-import { type MUDChain, latticeTestnet, mudFoundry } from "@latticexyz/common/chains"
+import { type MUDChain, mudFoundry } from "@latticexyz/common/chains"
 
 /*
  * See https://mud.dev/tutorials/minimal/deploy#run-the-user-interface
  * for instructions on how to add networks.
  */
-export const supportedChains: MUDChain[] = [mudFoundry, latticeTestnet, happyChainSepolia]
+export const supportedChains: MUDChain[] = [mudFoundry, happyChainSepolia]
