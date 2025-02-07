@@ -17,7 +17,7 @@ import { EncodedLengths, EncodedLengthsLib } from "@latticexyz/store/src/Encoded
 import { ResourceId } from "@latticexyz/store/src/ResourceId.sol";
 
 // Import user types
-import { MonsterCatchResult } from "./../common.sol";
+import { MonsterCatchResult } from "../common.sol";
 
 library MonsterCatchAttempt {
   // Hex below is the result of `WorldResourceIdLib.encode({ namespace: "", name: "MonsterCatchAtte", typeId: RESOURCE_OFFCHAIN_TABLE });`
