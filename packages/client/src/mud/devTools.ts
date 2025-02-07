@@ -33,7 +33,6 @@ async function mountDevTools(mud: MUDInterface): Promise<Destructor> {
     // Avoid loading when not in dev mode.
     const { mount } = await import("@latticexyz/dev-tools")
 
-    // contracts need updating as well?
     return (
         (await mount({
             config: mudConfig,
